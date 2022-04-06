@@ -17,6 +17,8 @@ import { Case } from "../models/Case"
 import { Project } from "../models/Project"
 import { GetProjectService } from "../Services/ProjectService"
 import { GetTopsideService } from "../Services/TopsideService"
+import AssetName from "../Components/AssetName"
+import CaseName from "../Components/CaseName"
 
 const AssetHeader = styled.div`
     margin-bottom: 2rem;
@@ -84,6 +86,7 @@ const TopsideView = () => {
     useEffect(() => {
         (async () => {
             try {
+                topside?.name
                 const projectResult = await GetProjectService().getProjectByID(params.projectId!)
                 setProject(projectResult)
                 const caseResult = projectResult.cases.find((o) => o.id === params.caseId)
@@ -161,6 +164,8 @@ const TopsideView = () => {
         setHasChanges(false)
     }
 
+    
+
     const handleTopsideNameFieldChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
         setTopsideName(e.target.value)
         if (e.target.value !== undefined && e.target.value !== "" && e.target.value !== topside?.name) {
@@ -174,16 +179,7 @@ const TopsideView = () => {
         <AssetViewDiv>
             <Typography variant="h2">Topside</Typography>
             <AssetHeader>
-                <WrapperColumn>
-                    <Label htmlFor="topsideName" label="Name" />
-                    <Input
-                        id="topsideName"
-                        name="topsideName"
-                        placeholder="Enter topside name"
-                        defaultValue={topside?.name}
-                        onChange={handleTopsideNameFieldChange}
-                    />
-                </WrapperColumn>
+                <AssetName/>
             </AssetHeader>
             <Wrapper>
                 <Typography variant="h4">DG4</Typography>

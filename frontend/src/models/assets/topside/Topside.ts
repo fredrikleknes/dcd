@@ -1,9 +1,6 @@
 import { TopsideCostProfile } from "./TopsideCostProfile"
-
-export class Topside implements Components.Schemas.TopsideDto {
-    id?: string | undefined
-    name?: string | undefined
-    projectId?: string | undefined
+import { Asset } from "../Asset"
+export class Topside extends Asset implements Components.Schemas.TopsideDto {
     costProfile?: TopsideCostProfile | undefined
     dryWeight?: number | undefined
     oilCapacity?: number | undefined
@@ -13,17 +10,12 @@ export class Topside implements Components.Schemas.TopsideDto {
     maturity?: Components.Schemas.Maturity | undefined
 
     constructor(data?: Components.Schemas.TopsideDto) {
+        super(data)
         if (data !== undefined) {
-            this.id = data.id
-            this.name = data.name ?? ""
-            this.projectId = data.projectId
             this.costProfile = TopsideCostProfile.fromJSON(data.costProfile)
             this.dryWeight = data.dryWeight
             this.maturity = data.maturity
-        } else {
-            this.id = "00000000-0000-0000-0000-000000000000"
-            this.name = ""
-        }
+        } 
     }
 
     static fromJSON(data: Components.Schemas.TopsideDto): Topside {
